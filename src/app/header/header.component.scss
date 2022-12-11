@@ -1,0 +1,19 @@
+nav {
+  background: var(--primary);
+  color: white;
+  .logo {
+    font-size: 18px;
+    font-weight: 700;
+  }
+}
+
+ul  {
+  li {
+    display: inline-block;
+    border-radius: 3px;
+    &:hover {
+      background: var(--secondary);
+    }
+    transition: background-color 0.4s;
+  }
+}
