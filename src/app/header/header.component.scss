@@ -9,8 +9,10 @@ nav {
 
 ul  {
   li {
+    cursor: pointer;
     display: inline-block;
     border-radius: 3px;
+    margin-right: 10px;
     &:hover {
       background: var(--secondary);
     }
