@@ -11,6 +11,7 @@ import { PanierContainerComponent } from './panier-container/panier-container.co
 import { IngredientListComponent } from './panier-container/ingredient-list/ingredient-list.component';
 import { RouterModule } from '@angular/router';
 import { APP_ROUTES } from './shared/app.routes';
+import { CocktailFormComponent } from './cocktail-container/cocktail-form/cocktail-form.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { APP_ROUTES } from './shared/app.routes';
     CocktailContainerComponent,
     SelectedDirective,
     PanierContainerComponent,
-    IngredientListComponent
+    IngredientListComponent,
+    CocktailFormComponent
   ],
   imports: [
     BrowserModule,

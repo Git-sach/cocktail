@@ -54,17 +54,16 @@ export class CocktailService {
           quantity: 1
         },
         {
-          name: 'Manthe',
+          name: 'courgette',
           quantity: 1
         }
       ]
     }
   ]);
 
-  public selectedCocktail$: BehaviorSubject<Cocktail> = new BehaviorSubject(this.cocktails$.value[0]);
-
-  public viewCocktail(indexCocktail: number) {
-    this.selectedCocktail$.next(this.cocktails$.value[indexCocktail])
+  public getCocktail(index: number) {
+    const cocktails = this.cocktails$.value;
+    return cocktails[index]
   }
 
   constructor() { }
