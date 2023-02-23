@@ -5,7 +5,7 @@ import { CocktailFormComponent } from "../cocktail-container/cocktail-form/cockt
 import { PanierContainerComponent } from "../panier-container/panier-container.component";
 
 export const APP_ROUTES: Routes = [
-  //pathMatch full, pour dire que la chaine de carac vide n'est pas un prefix, mais dois matcher exactement avec la chaine vide (car toutes les chaines de carac commences par une chaine vide)
+  //pathMatch full, pour dire que la chaine de carac vide n'est pas un prefix, mais doit matcher exactement avec la chaine vide (car toutes les chaines de carac commences par une chaine vide)
   {path: '', redirectTo: 'cocktails', pathMatch: 'full'},
   {
     path: 'cocktails', component: CocktailContainerComponent,

@@ -17,6 +17,17 @@ a {
   color: inherit;
 }
 
+input {
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  padding: 8px 15px;
+}
+
+hr {
+  margin: 20px 0px;
+  border-top: 1px solid #ddd;
+}
+
 :root {
   --font-family: 'Roboto', sans-serif;
   --primary: #00cec9;
@@ -147,6 +158,15 @@ body {
     }
     transition: background-color 0.4s;
   }
+  &-secondary {
+    background-color: #ddd;
+  }
+}
+
+button:disabled {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: not-allowed;
 }
 
 .badge {
