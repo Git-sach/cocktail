@@ -1,4 +1,4 @@
-<div class="d-flex flex-column">
+<div *ngIf="cocktail" class="d-flex flex-column">
   <img class="mb-20" [src]="cocktail.img" [alt]="cocktail.img">
   <h3 class="mb-20">{{ cocktail.name }}</h3>
   <p class="mb-20">{{ cocktail.description }}</p>

@@ -7,7 +7,8 @@ import { Cocktail } from 'src/app/shared/interfaces/cocktail.interface';
   styleUrls: ['./cocktail-list.component.scss']
 })
 export class CocktailListComponent implements OnInit {
-  @Input() public cocktails!: Cocktail[];
+  @Input() public cocktails: Cocktail[] | null = null;
+  public search: string = '';
 
   constructor() {};
 

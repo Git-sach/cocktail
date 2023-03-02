@@ -1,5 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, filter, map, Observable, tap } from 'rxjs';
 import { Cocktail } from '../interfaces/cocktail.interface';
 
 @Injectable({
@@ -7,8 +8,72 @@ import { Cocktail } from '../interfaces/cocktail.interface';
 })
 export class CocktailService {
 
-  public cocktails$: BehaviorSubject<Cocktail[]> = new BehaviorSubject([
-    {
+  public cocktails$: BehaviorSubject<Cocktail[] | []> = new BehaviorSubject<Cocktail[] | []>([]);
+
+  public getCocktail(index: number): Observable<Cocktail> {
+    return this.cocktails$.pipe(
+      // Opérateur que l'on utilise pour vérifier si on a des cocktails
+      filter((cocktails: Cocktail[]) => {
+        return cocktails != null
+      }),
+      // Opérateur que l'on utilise pour couper le flux une fois l'information apssé dans le first
+      // Cela permet de ne pas gérer l'unsubscibe
+      // first(),
+      map((cocktails: Cocktail[]) => {
+        return cocktails[index]
+      })
+    )
+  }
+
+  public addCocktail(cocktail: Cocktail): Observable<Cocktail> {
+    return this.http.post<Cocktail>('https://restapi.fr/api/cocktailadrien', cocktail)
+      .pipe(
+        tap((savedCocktail: Cocktail) => {
+          const value = this.cocktails$.value;
+          this.cocktails$.next([...value, savedCocktail])
+        })
+      )
+  }
+
+  public editCocktail(cocktailId: string, editedCocktail: Cocktail): Observable<Cocktail> {
+    return this.http.patch<Cocktail>(
+      `https://restapi.fr/api/cocktailadrien/${cocktailId}`, editedCocktail).pipe(
+        tap((savedCocktail: Cocktail) => {
+          const value = this.cocktails$.value;
+          this.cocktails$.next(
+            value.map((cocktail: Cocktail) => {
+              if(cocktail.name === editedCocktail.name) {
+                return savedCocktail;
+              } else {
+                return cocktail;
+              }
+            })
+          );
+        })
+      );
+
+  }
+
+  // Nous allons faire appèle a cette requête dans app.component
+  // car c'est un component qui s'instancie au démarage de l'application
+  // et qui n'est pas rappelé même quand on navigue sur l'app
+  // (pour ne pas faire trop de requêtes http)
+  public fetchCocktails(): Observable<Cocktail[]> {
+    return this.http.get<Cocktail[] | []>('https://restapi.fr/api/cocktailadrien').pipe(
+      // opérateur qui ne fait rien mais qui prend en paramètre un cb
+      // et qui nous permet de transmettre la liste de cocktail au behaviorSubject (methode éléguante)
+      tap((cocktails: Cocktail[]) => {
+        this.cocktails$.next(cocktails)
+      })
+    )
+  }
+
+  constructor(private http: HttpClient) {
+    //this.seed();
+  }
+
+  public seed (){
+    this.http.post('https://restapi.fr/api/cocktailadrien', {
       name: "Mojito",
       img:
         "https://assets.afcdn.com/recipe/20180705/80345_w1024h768c1cx4150cy1741.jpg",
@@ -24,7 +89,10 @@ export class CocktailService {
           quantity: 1
         }
       ]
-    },
+    }).subscribe();
+
+
+    this.http.post('https://restapi.fr/api/cocktailadrien',
     {
       name: "Cosmopolitan",
       img:
@@ -41,7 +109,9 @@ export class CocktailService {
           quantity: 1
         }
       ]
-    },
+    }).subscribe();
+
+    this.http.post('https://restapi.fr/api/cocktailadrien',
     {
       name: "Mai Tai",
       img:
@@ -58,31 +128,6 @@ export class CocktailService {
           quantity: 1
         }
       ]
-    }
-  ]);
-
-  public getCocktail(index: number) {
-    const cocktails = this.cocktails$.value;
-    return cocktails[index]
+    }).subscribe();
   }
-
-  public addCocktail(cocktail: Cocktail): void {
-    const value = this.cocktails$.value;
-    this.cocktails$.next([...value, cocktail]);
-  }
-
-  public editCocktail(editedCocktail: Cocktail): void {
-    const value = this.cocktails$.value;
-    this.cocktails$.next(
-      value.map((cocktail: Cocktail) => {
-        if(cocktail.name === editedCocktail.name) {
-          return editedCocktail;
-        } else {
-          return cocktail;
-        }
-      })
-    );
-  }
-
-  constructor() { }
 }
