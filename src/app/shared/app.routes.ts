@@ -1,8 +1,8 @@
 import { Routes } from "@angular/router";
-import { CocktailContainerComponent } from "../cocktail-container/cocktail-container.component";
-import { CocktailDetailsComponent } from "../cocktail-container/cocktail-details/cocktail-details.component";
-import { CocktailFormComponent } from "../cocktail-container/cocktail-form/cocktail-form.component";
-import { PanierContainerComponent } from "../panier-container/panier-container.component";
+import { CocktailContainerComponent } from "src/app/features/cocktail/cocktail-container/cocktail-container.component";
+import { CocktailDetailsComponent } from "src/app/features/cocktail/cocktail-container/cocktail-details/cocktail-details.component";
+import { CocktailFormComponent } from "src/app/features/cocktail/cocktail-container/cocktail-form/cocktail-form.component";
+import { PanierContainerComponent } from "../features/panier/panier-container/panier-container.component";
 
 export const APP_ROUTES: Routes = [
   //pathMatch full, pour dire que la chaine de carac vide n'est pas un prefix, mais doit matcher exactement avec la chaine vide (car toutes les chaines de carac commences par une chaine vide)
